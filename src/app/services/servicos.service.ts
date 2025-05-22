@@ -55,6 +55,32 @@ export class ServicosService {
         'Planejamento terapêutico personalizado',
         'Relatório detalhado'
       ]
+    },
+    {
+      id: 4,
+      nome: 'Terapia Infantil',
+      descricao: 'Atendimento especializado para crianças, utilizando técnicas lúdicas e adequadas à idade. Suporte ao desenvolvimento emocional.',
+      imagem: 'https://images.pexels.com/photos/3662667/pexels-photo-3662667.jpeg',
+      preco: 180,
+      duracao: '45 minutos',
+      beneficios: [
+        'Desenvolvimento emocional saudável',
+        'Melhoria no comportamento',
+        'Suporte à família'
+      ]
+    },
+    {
+      id: 5,
+      nome: 'Orientação Profissional',
+      descricao: 'Auxílio na descoberta vocacional e planejamento de carreira. Avaliação de perfil e interesses profissionais.',
+      imagem: 'https://images.pexels.com/photos/3184465/pexels-photo-3184465.jpeg',
+      preco: 250,
+      duracao: '1 hora',
+      beneficios: [
+        'Autoconhecimento profissional',
+        'Planejamento de carreira',
+        'Tomada de decisão consciente'
+      ]
     }
   ];
 

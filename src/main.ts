@@ -38,7 +38,7 @@ import { routes } from './app/app-routing.module';
         <div class="footer-section">
           <h4>Contato</h4>
           <p>📧 contato&#64;psicare.com</p>
-          <p>📞 (11) 9999-9999</p>
+          <p>📞 (31) 99999-9999</p>
         </div>
         <div class="footer-section">
           <h4>Horário de Atendimento</h4>
