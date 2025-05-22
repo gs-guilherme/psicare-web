@@ -25,9 +25,6 @@ import { ServicosService, Servico } from '../../services/servicos.service';
               <button routerLink="/agendamento" class="primary-button">
                 Agendar consulta
               </button>
-              <button class="secondary-button" (click)="saibaMais(servico)">
-                Saiba mais
-              </button>
             </div>
           </div>
         </div>
@@ -112,7 +109,7 @@ import { ServicosService, Servico } from '../../services/servicos.service';
       gap: 1rem;
       margin-top: auto;
     }
-    .primary-button, .secondary-button {
+    .primary-button {
       padding: 0.8rem 1.5rem;
       border-radius: 25px;
       font-weight: 500;
@@ -120,23 +117,12 @@ import { ServicosService, Servico } from '../../services/servicos.service';
       transition: all 0.3s ease;
       flex: 1;
       text-align: center;
-    }
-    .primary-button {
       background-color: #4ECDC4;
       color: white;
       border: none;
     }
-    .secondary-button {
-      background-color: transparent;
-      color: #6b4595;
-      border: 2px solid #6b4595;
-    }
     .primary-button:hover {
       background-color: #45b8b0;
-    }
-    .secondary-button:hover {
-      background-color: #6b4595;
-      color: white;
     }
     @media (max-width: 768px) {
       .container {
@@ -170,10 +156,5 @@ export class ServicosComponent implements OnInit {
     this.servicosService.getServicos().subscribe(
       servicos => this.servicos = servicos
     );
-  }
-
-  saibaMais(servico: Servico) {
-    // Implementar modal ou navegação para mais detalhes
-    console.log('Mais informações sobre:', servico.nome);
   }
 }
