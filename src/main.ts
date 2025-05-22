@@ -1,11 +1,7 @@
 import { Component } from '@angular/core';
 import { bootstrapApplication } from '@angular/platform-browser';
-import { provideRouter, RouterOutlet, RouterLink, RouterLinkActive } from '@angular/router';
-import { HomeComponent } from './app/components/home/home.component';
-import { ServicosComponent } from './app/components/servicos/servicos.component';
-import { EquipeComponent } from './app/components/equipe/equipe.component';
-import { AgendamentoComponent } from './app/components/agendamento/agendamento.component';
-import { ConfirmacaoComponent } from './app/components/confirmacao/confirmacao.component';
+import { RouterOutlet, RouterLink, RouterLinkActive, provideRouter } from '@angular/router';
+import { AppRoutingModule } from './app/app-routing.module';
 
 @Component({
   selector: 'app-root',
@@ -196,16 +192,8 @@ export class App {
   currentYear = new Date().getFullYear();
 }
 
-const routes = [
-  { path: '', component: HomeComponent },
-  { path: 'servicos', component: ServicosComponent },
-  { path: 'equipe', component: EquipeComponent },
-  { path: 'agendamento', component: AgendamentoComponent },
-  { path: 'confirmacao', component: ConfirmacaoComponent }
-];
-
 bootstrapApplication(App, {
   providers: [
-    provideRouter(routes)
+    provideRouter(AppRoutingModule.routes)
   ]
 });

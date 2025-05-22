@@ -21,11 +21,11 @@ import { Router } from '@angular/router';
               [(ngModel)]="formData.nome" 
               required
               #nome="ngModel"
-              [class.error]="nome.invalid && nome.touched"
+              [class.error]="nome.invalid && (nome.dirty || nome.touched)"
             >
-            <span class="error-message" *ngIf="nome.invalid && nome.touched">
-              Nome é obrigatório
-            </span>
+            <div class="error-messages" *ngIf="nome.invalid && (nome.dirty || nome.touched)">
+              <span *ngIf="nome.errors?.['required']">Por favor, informe seu nome completo</span>
+            </div>
           </div>
           
           <div class="form-group">
@@ -38,11 +38,12 @@ import { Router } from '@angular/router';
               required
               email
               #email="ngModel"
-              [class.error]="email.invalid && email.touched"
+              [class.error]="email.invalid && (email.dirty || email.touched)"
             >
-            <span class="error-message" *ngIf="email.invalid && email.touched">
-              E-mail inválido
-            </span>
+            <div class="error-messages" *ngIf="email.invalid && (email.dirty || email.touched)">
+              <span *ngIf="email.errors?.['required']">Por favor, informe seu e-mail</span>
+              <span *ngIf="email.errors?.['email']">Por favor, informe um e-mail válido</span>
+            </div>
           </div>
           
           <div class="form-group">
@@ -52,6 +53,7 @@ import { Router } from '@angular/router';
               id="plano" 
               name="plano" 
               [(ngModel)]="formData.plano"
+              #plano="ngModel"
             >
           </div>
           
@@ -62,6 +64,7 @@ import { Router } from '@angular/router';
               name="historico" 
               [(ngModel)]="formData.historico" 
               rows="4"
+              #historico="ngModel"
             ></textarea>
           </div>
           
@@ -74,11 +77,11 @@ import { Router } from '@angular/router';
               [(ngModel)]="formData.data" 
               required
               #data="ngModel"
-              [class.error]="data.invalid && data.touched"
+              [class.error]="data.invalid && (data.dirty || data.touched)"
             >
-            <span class="error-message" *ngIf="data.invalid && data.touched">
-              Data é obrigatória
-            </span>
+            <div class="error-messages" *ngIf="data.invalid && (data.dirty || data.touched)">
+              <span *ngIf="data.errors?.['required']">Por favor, selecione uma data</span>
+            </div>
           </div>
 
           <div class="form-group">
@@ -89,7 +92,7 @@ import { Router } from '@angular/router';
               [(ngModel)]="formData.horario"
               required
               #horario="ngModel"
-              [class.error]="horario.invalid && horario.touched"
+              [class.error]="horario.invalid && (horario.dirty || horario.touched)"
             >
               <option value="">Selecione um horário</option>
               <option value="08:00">08:00</option>
@@ -101,9 +104,9 @@ import { Router } from '@angular/router';
               <option value="16:00">16:00</option>
               <option value="17:00">17:00</option>
             </select>
-            <span class="error-message" *ngIf="horario.invalid && horario.touched">
-              Horário é obrigatório
-            </span>
+            <div class="error-messages" *ngIf="horario.invalid && (horario.dirty || horario.touched)">
+              <span *ngIf="horario.errors?.['required']">Por favor, selecione um horário</span>
+            </div>
           </div>
           
           <div class="form-group checkbox">
@@ -118,9 +121,9 @@ import { Router } from '@angular/router';
             <label for="consentimento">
               Concordo com os termos de uso e política de privacidade
             </label>
-            <span class="error-message" *ngIf="consentimento.invalid && consentimento.touched">
-              É necessário aceitar os termos
-            </span>
+            <div class="error-messages" *ngIf="consentimento.invalid && (consentimento.dirty || consentimento.touched)">
+              <span *ngIf="consentimento.errors?.['required']">É necessário aceitar os termos para prosseguir</span>
+            </div>
           </div>
           
           <button type="submit" [disabled]="!agendamentoForm.form.valid">
@@ -177,11 +180,13 @@ import { Router } from '@angular/router';
     .error {
       border-color: #ff4444;
     }
-    .error-message {
+    .error-messages {
       color: #ff4444;
       font-size: 0.875rem;
       margin-top: 0.25rem;
-      display: block;
+      padding: 0.5rem;
+      border-radius: 4px;
+      background-color: rgba(255, 68, 68, 0.1);
     }
     .checkbox {
       display: flex;

@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
+import { Observable, of, throwError } from 'rxjs';
+import { catchError } from 'rxjs/operators';
 
 export interface Servico {
   id: number;
@@ -54,40 +55,65 @@ export class ServicosService {
         'Planejamento terapêutico personalizado',
         'Relatório detalhado'
       ]
-    },
-    {
-      id: 4,
-      nome: 'Psicopedagogia Clínica',
-      descricao: 'Auxílio especializado para dificuldades de aprendizagem e desenvolvimento. Estratégias personalizadas para cada caso.',
-      imagem: 'https://images.pexels.com/photos/3769021/pexels-photo-3769021.jpeg',
-      preco: 180,
-      duracao: '45 minutos',
-      beneficios: [
-        'Melhoria no desempenho escolar',
-        'Desenvolvimento de estratégias de aprendizagem',
-        'Acompanhamento personalizado'
-      ]
-    },
-    {
-      id: 5,
-      nome: 'Acompanhamento Psicológico',
-      descricao: 'Suporte contínuo para desenvolvimento pessoal e bem-estar emocional. Processo terapêutico adaptado às suas necessidades.',
-      imagem: 'https://images.pexels.com/photos/4101143/pexels-photo-4101143.jpeg',
-      preco: 160,
-      duracao: '50 minutos',
-      beneficios: [
-        'Acompanhamento contínuo',
-        'Desenvolvimento pessoal',
-        'Suporte emocional especializado'
-      ]
     }
   ];
 
   getServicos(): Observable<Servico[]> {
-    return of(this.servicos);
+    try {
+      return of(this.servicos).pipe(
+        catchError(error => throwError(() => new Error('Erro ao carregar serviços')))
+      );
+    } catch (error) {
+      return throwError(() => new Error('Erro ao processar requisição'));
+    }
   }
 
   getServico(id: number): Observable<Servico | undefined> {
-    return of(this.servicos.find(servico => servico.id === id));
+    try {
+      const servico = this.servicos.find(s => s.id === id);
+      if (!servico) {
+        return throwError(() => new Error('Serviço não encontrado'));
+      }
+      return of(servico);
+    } catch (error) {
+      return throwError(() => new Error('Erro ao buscar serviço'));
+    }
+  }
+
+  adicionarServico(servico: Servico): Observable<Servico> {
+    try {
+      const newId = Math.max(...this.servicos.map(s => s.id)) + 1;
+      const novoServico = { ...servico, id: newId };
+      this.servicos.push(novoServico);
+      return of(novoServico);
+    } catch (error) {
+      return throwError(() => new Error('Erro ao adicionar serviço'));
+    }
+  }
+
+  atualizarServico(servico: Servico): Observable<Servico> {
+    try {
+      const index = this.servicos.findIndex(s => s.id === servico.id);
+      if (index === -1) {
+        return throwError(() => new Error('Serviço não encontrado'));
+      }
+      this.servicos[index] = servico;
+      return of(servico);
+    } catch (error) {
+      return throwError(() => new Error('Erro ao atualizar serviço'));
+    }
+  }
+
+  removerServico(id: number): Observable<boolean> {
+    try {
+      const index = this.servicos.findIndex(s => s.id === id);
+      if (index === -1) {
+        return throwError(() => new Error('Serviço não encontrado'));
+      }
+      this.servicos.splice(index, 1);
+      return of(true);
+    } catch (error) {
+      return throwError(() => new Error('Erro ao remover serviço'));
+    }
   }
 }

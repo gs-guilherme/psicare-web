@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
+import { Observable, of, throwError } from 'rxjs';
+import { catchError } from 'rxjs/operators';
 
 export interface Profissional {
   id: number;
@@ -45,6 +46,61 @@ export class ProfissionaisService {
   ];
 
   getProfissionais(): Observable<Profissional[]> {
-    return of(this.profissionais);
+    try {
+      return of(this.profissionais).pipe(
+        catchError(error => throwError(() => new Error('Erro ao carregar profissionais')))
+      );
+    } catch (error) {
+      return throwError(() => new Error('Erro ao processar requisição'));
+    }
+  }
+
+  getProfissionalById(id: number): Observable<Profissional | undefined> {
+    try {
+      const profissional = this.profissionais.find(p => p.id === id);
+      if (!profissional) {
+        return throwError(() => new Error('Profissional não encontrado'));
+      }
+      return of(profissional);
+    } catch (error) {
+      return throwError(() => new Error('Erro ao buscar profissional'));
+    }
+  }
+
+  adicionarProfissional(profissional: Profissional): Observable<Profissional> {
+    try {
+      const newId = Math.max(...this.profissionais.map(p => p.id)) + 1;
+      const novoProfissional = { ...profissional, id: newId };
+      this.profissionais.push(novoProfissional);
+      return of(novoProfissional);
+    } catch (error) {
+      return throwError(() => new Error('Erro ao adicionar profissional'));
+    }
+  }
+
+  atualizarProfissional(profissional: Profissional): Observable<Profissional> {
+    try {
+      const index = this.profissionais.findIndex(p => p.id === profissional.id);
+      if (index === -1) {
+        return throwError(() => new Error('Profissional não encontrado'));
+      }
+      this.profissionais[index] = profissional;
+      return of(profissional);
+    } catch (error) {
+      return throwError(() => new Error('Erro ao atualizar profissional'));
+    }
+  }
+
+  removerProfissional(id: number): Observable<boolean> {
+    try {
+      const index = this.profissionais.findIndex(p => p.id === id);
+      if (index === -1) {
+        return throwError(() => new Error('Profissional não encontrado'));
+      }
+      this.profissionais.splice(index, 1);
+      return of(true);
+    } catch (error) {
+      return throwError(() => new Error('Erro ao remover profissional'));
+    }
   }
 }
