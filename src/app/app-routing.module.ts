@@ -6,7 +6,7 @@ import { EquipeComponent } from './components/equipe/equipe.component';
 import { AgendamentoComponent } from './components/agendamento/agendamento.component';
 import { ConfirmacaoComponent } from './components/confirmacao/confirmacao.component';
 
-const routes: Routes = [
+export const routes: Routes = [
   { path: '', component: HomeComponent },
   { path: 'servicos', component: ServicosComponent },
   { path: 'equipe', component: EquipeComponent },

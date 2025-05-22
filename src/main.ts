@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { bootstrapApplication } from '@angular/platform-browser';
 import { RouterOutlet, RouterLink, RouterLinkActive, provideRouter } from '@angular/router';
 import { AppRoutingModule } from './app/app-routing.module';
+import { routes } from './app/app-routing.module';
 
 @Component({
   selector: 'app-root',
@@ -194,6 +195,6 @@ export class App {
 
 bootstrapApplication(App, {
   providers: [
-    provideRouter(AppRoutingModule.routes)
+    provideRouter(routes)
   ]
 });
