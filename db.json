@@ -1,0 +1,74 @@
+{
+  "profissionais": [
+    {
+      "id": 1,
+      "nome": "Dra. Ana Martins",
+      "especialidade": "Psicóloga clínica",
+      "descricao": "Especialista em terapia cognitivo-comportamental",
+      "imagem": "https://images.pexels.com/photos/5327585/pexels-photo-5327585.jpeg"
+    },
+    {
+      "id": 2,
+      "nome": "Dra. Beatriz Lima",
+      "especialidade": "Psicóloga infantil",
+      "descricao": "Especializada em desenvolvimento infantil e adolescente",
+      "imagem": "https://images.pexels.com/photos/5998034/pexels-photo-5998034.jpeg"
+    },
+    {
+      "id": 3,
+      "nome": "Dr. Rafael Souza",
+      "especialidade": "Neuropsicólogo",
+      "descricao": "Especialista em avaliação neuropsicológica",
+      "imagem": "https://images.pexels.com/photos/5490276/pexels-photo-5490276.jpeg"
+    },
+    {
+      "id": 4,
+      "nome": "Dr. Lucas Andrade",
+      "especialidade": "Psicopedagogo",
+      "descricao": "Especialista em dificuldades de aprendizagem",
+      "imagem": "https://images.pexels.com/photos/5490263/pexels-photo-5490263.jpeg"
+    }
+  ],
+  "servicos": [
+    {
+      "id": 1,
+      "nome": "Psicoterapia Individual",
+      "descricao": "Atendimento personalizado para auxiliar no autoconhecimento e desenvolvimento pessoal. Sessões focadas em suas necessidades específicas.",
+      "imagem": "https://images.pexels.com/photos/4101143/pexels-photo-4101143.jpeg",
+      "preco": 150,
+      "duracao": "50 minutos",
+      "beneficios": [
+        "Autoconhecimento aprofundado",
+        "Gestão de ansiedade e estresse",
+        "Desenvolvimento de habilidades emocionais"
+      ]
+    },
+    {
+      "id": 2,
+      "nome": "Terapia de Casal",
+      "descricao": "Suporte especializado para melhorar a comunicação e resolver conflitos no relacionamento. Fortalecimento dos laços afetivos.",
+      "imagem": "https://images.pexels.com/photos/4098157/pexels-photo-4098157.jpeg",
+      "preco": 200,
+      "duracao": "60 minutos",
+      "beneficios": [
+        "Melhoria na comunicação",
+        "Resolução de conflitos",
+        "Fortalecimento do vínculo"
+      ]
+    },
+    {
+      "id": 3,
+      "nome": "Avaliação Neuropsicológica",
+      "descricao": "Avaliação completa das funções cognitivas e comportamentais. Identificação de potencialidades e dificuldades.",
+      "imagem": "https://images.pexels.com/photos/4226256/pexels-photo-4226256.jpeg",
+      "preco": 300,
+      "duracao": "2 horas",
+      "beneficios": [
+        "Diagnóstico preciso",
+        "Planejamento terapêutico personalizado",
+        "Relatório detalhado"
+      ]
+    }
+  ],
+  "agendamentos": []
+}

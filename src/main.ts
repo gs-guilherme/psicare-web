@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { bootstrapApplication } from '@angular/platform-browser';
 import { RouterOutlet, RouterLink, RouterLinkActive, provideRouter } from '@angular/router';
+import { provideHttpClient } from '@angular/common/http';
 import { AppRoutingModule } from './app/app-routing.module';
 import { routes } from './app/app-routing.module';
 
@@ -195,6 +196,7 @@ export class App {
 
 bootstrapApplication(App, {
   providers: [
-    provideRouter(routes)
+    provideRouter(routes),
+    provideHttpClient()
   ]
 });
