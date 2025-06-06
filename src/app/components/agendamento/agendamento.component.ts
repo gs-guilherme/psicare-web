@@ -1,30 +1,33 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { AgendamentoService } from '../../services/agendamento.service';
 
 @Component({
   selector: 'app-agendamento',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, ReactiveFormsModule],
   template: `
     <div class="container">
       <div class="form-container">
         <h2>Agendar Consulta</h2>
-        <form (ngSubmit)="onSubmit()" #agendamentoForm="ngForm">
+        <form [formGroup]="agendamentoForm" (ngSubmit)="onSubmit()">
           <div class="form-group">
             <label for="nome">Nome Completo</label>
             <input 
               type="text" 
               id="nome" 
-              name="nome" 
-              [(ngModel)]="formData.nome" 
-              required
-              #nome="ngModel"
-              [class.error]="nome.invalid && (nome.dirty || nome.touched)"
+              formControlName="nome"
+              [class.error]="isFieldInvalid('nome')"
             >
-            <div class="error-messages" *ngIf="nome.invalid && (nome.dirty || nome.touched)">
-              <span *ngIf="nome.errors?.['required']">Por favor, informe seu nome completo</span>
+            <div class="error-messages" *ngIf="isFieldInvalid('nome')">
+              <span *ngIf="agendamentoForm.get('nome')?.errors?.['required']">
+                Campo obrigatório
+              </span>
+              <span *ngIf="agendamentoForm.get('nome')?.errors?.['minlength']">
+                Nome deve ter pelo menos 3 caracteres
+              </span>
             </div>
           </div>
           
@@ -33,16 +36,35 @@ import { Router } from '@angular/router';
             <input 
               type="email" 
               id="email" 
-              name="email" 
-              [(ngModel)]="formData.email" 
-              required
-              email
-              #email="ngModel"
-              [class.error]="email.invalid && (email.dirty || email.touched)"
+              formControlName="email"
+              [class.error]="isFieldInvalid('email')"
             >
-            <div class="error-messages" *ngIf="email.invalid && (email.dirty || email.touched)">
-              <span *ngIf="email.errors?.['required']">Por favor, informe seu e-mail</span>
-              <span *ngIf="email.errors?.['email']">Por favor, informe um e-mail válido</span>
+            <div class="error-messages" *ngIf="isFieldInvalid('email')">
+              <span *ngIf="agendamentoForm.get('email')?.errors?.['required']">
+                Campo obrigatório
+              </span>
+              <span *ngIf="agendamentoForm.get('email')?.errors?.['email']">
+                E-mail inválido
+              </span>
+            </div>
+          </div>
+          
+          <div class="form-group">
+            <label for="telefone">Telefone</label>
+            <input 
+              type="tel" 
+              id="telefone" 
+              formControlName="telefone"
+              placeholder="(31) 99999-9999"
+              [class.error]="isFieldInvalid('telefone')"
+            >
+            <div class="error-messages" *ngIf="isFieldInvalid('telefone')">
+              <span *ngIf="agendamentoForm.get('telefone')?.errors?.['required']">
+                Campo obrigatório
+              </span>
+              <span *ngIf="agendamentoForm.get('telefone')?.errors?.['pattern']">
+                Formato de telefone inválido
+              </span>
             </div>
           </div>
           
@@ -51,9 +73,8 @@ import { Router } from '@angular/router';
             <input 
               type="text" 
               id="plano" 
-              name="plano" 
-              [(ngModel)]="formData.plano"
-              #plano="ngModel"
+              formControlName="plano"
+              placeholder="Opcional"
             >
           </div>
           
@@ -61,10 +82,9 @@ import { Router } from '@angular/router';
             <label for="historico">Histórico Médico</label>
             <textarea 
               id="historico" 
-              name="historico" 
-              [(ngModel)]="formData.historico" 
+              formControlName="historico"
               rows="4"
-              #historico="ngModel"
+              placeholder="Descreva brevemente seu histórico médico (opcional)"
             ></textarea>
           </div>
           
@@ -73,14 +93,14 @@ import { Router } from '@angular/router';
             <input 
               type="date" 
               id="data" 
-              name="data" 
-              [(ngModel)]="formData.data" 
-              required
-              #data="ngModel"
-              [class.error]="data.invalid && (data.dirty || data.touched)"
+              formControlName="data"
+              [min]="minDate"
+              [class.error]="isFieldInvalid('data')"
             >
-            <div class="error-messages" *ngIf="data.invalid && (data.dirty || data.touched)">
-              <span *ngIf="data.errors?.['required']">Por favor, selecione uma data</span>
+            <div class="error-messages" *ngIf="isFieldInvalid('data')">
+              <span *ngIf="agendamentoForm.get('data')?.errors?.['required']">
+                Campo obrigatório
+              </span>
             </div>
           </div>
 
@@ -88,11 +108,8 @@ import { Router } from '@angular/router';
             <label for="horario">Horário Preferencial</label>
             <select 
               id="horario" 
-              name="horario" 
-              [(ngModel)]="formData.horario"
-              required
-              #horario="ngModel"
-              [class.error]="horario.invalid && (horario.dirty || horario.touched)"
+              formControlName="horario"
+              [class.error]="isFieldInvalid('horario')"
             >
               <option value="">Selecione um horário</option>
               <option value="08:00">08:00</option>
@@ -104,8 +121,10 @@ import { Router } from '@angular/router';
               <option value="16:00">16:00</option>
               <option value="17:00">17:00</option>
             </select>
-            <div class="error-messages" *ngIf="horario.invalid && (horario.dirty || horario.touched)">
-              <span *ngIf="horario.errors?.['required']">Por favor, selecione um horário</span>
+            <div class="error-messages" *ngIf="isFieldInvalid('horario')">
+              <span *ngIf="agendamentoForm.get('horario')?.errors?.['required']">
+                Campo obrigatório
+              </span>
             </div>
           </div>
           
@@ -113,21 +132,31 @@ import { Router } from '@angular/router';
             <input 
               type="checkbox" 
               id="consentimento" 
-              name="consentimento" 
-              [(ngModel)]="formData.consentimento" 
-              required
-              #consentimento="ngModel"
+              formControlName="consentimento"
             >
             <label for="consentimento">
               Concordo com os termos de uso e política de privacidade
             </label>
-            <div class="error-messages" *ngIf="consentimento.invalid && (consentimento.dirty || consentimento.touched)">
-              <span *ngIf="consentimento.errors?.['required']">É necessário aceitar os termos para prosseguir</span>
+            <div class="error-messages" *ngIf="isFieldInvalid('consentimento')">
+              <span *ngIf="agendamentoForm.get('consentimento')?.errors?.['required']">
+                É necessário aceitar os termos para prosseguir
+              </span>
             </div>
           </div>
           
-          <button type="submit" [disabled]="!agendamentoForm.form.valid">
-            Agendar Consulta
+          <div class="form-validation-summary" *ngIf="agendamentoForm.invalid && agendamentoForm.touched">
+            <p class="error-summary">
+              ⚠️ Preencha corretamente todos os campos obrigatórios antes de enviar
+            </p>
+          </div>
+          
+          <button 
+            type="submit" 
+            [disabled]="agendamentoForm.invalid || isSubmitting"
+            [class.loading]="isSubmitting"
+          >
+            <span *ngIf="!isSubmitting">Agendar Consulta</span>
+            <span *ngIf="isSubmitting">Agendando...</span>
           </button>
         </form>
       </div>
@@ -202,6 +231,18 @@ import { Router } from '@angular/router';
       font-size: 0.9rem;
       color: #666;
     }
+    .form-validation-summary {
+      margin-bottom: 1rem;
+      padding: 1rem;
+      background-color: rgba(255, 68, 68, 0.1);
+      border-radius: 8px;
+      border-left: 4px solid #ff4444;
+    }
+    .error-summary {
+      color: #ff4444;
+      font-weight: 500;
+      margin: 0;
+    }
     button {
       width: 100%;
       padding: 1rem;
@@ -221,25 +262,81 @@ import { Router } from '@angular/router';
       background-color: #ccc;
       cursor: not-allowed;
     }
+    button.loading {
+      background-color: #999;
+    }
+    @media (max-width: 768px) {
+      .container {
+        padding: 2rem 1rem;
+      }
+      .form-container {
+        padding: 1.5rem;
+      }
+    }
   `]
 })
-export class AgendamentoComponent {
-  formData = {
-    nome: '',
-    email: '',
-    plano: '',
-    historico: '',
-    data: '',
-    horario: '',
-    consentimento: false
-  };
+export class AgendamentoComponent implements OnInit {
+  agendamentoForm!: FormGroup;
+  isSubmitting = false;
+  minDate: string;
 
-  constructor(private router: Router) {}
+  constructor(
+    private formBuilder: FormBuilder,
+    private router: Router,
+    private agendamentoService: AgendamentoService
+  ) {
+    // Set minimum date to today
+    const today = new Date();
+    this.minDate = today.toISOString().split('T')[0];
+  }
+
+  ngOnInit() {
+    this.initializeForm();
+  }
+
+  private initializeForm() {
+    this.agendamentoForm = this.formBuilder.group({
+      nome: ['', [Validators.required, Validators.minLength(3)]],
+      email: ['', [Validators.required, Validators.email]],
+      telefone: ['', [Validators.required, Validators.pattern(/^\(\d{2}\)\s\d{4,5}-\d{4}$/)]],
+      plano: [''],
+      historico: [''],
+      data: ['', Validators.required],
+      horario: ['', Validators.required],
+      consentimento: [false, Validators.requiredTrue]
+    });
+  }
+
+  isFieldInvalid(fieldName: string): boolean {
+    const field = this.agendamentoForm.get(fieldName);
+    return !!(field && field.invalid && (field.dirty || field.touched));
+  }
 
   onSubmit() {
-    if (this.formData.consentimento) {
-      console.log('Dados do agendamento:', this.formData);
-      this.router.navigate(['/confirmacao']);
+    if (this.agendamentoForm.valid) {
+      this.isSubmitting = true;
+      
+      const agendamentoData = this.agendamentoForm.value;
+      
+      this.agendamentoService.criarAgendamento(agendamentoData).subscribe({
+        next: (response) => {
+          console.log('Agendamento criado com sucesso:', response);
+          this.router.navigate(['/confirmacao']);
+        },
+        error: (error) => {
+          console.error('Erro ao criar agendamento:', error);
+          this.isSubmitting = false;
+          // In a real app, show error message to user
+        },
+        complete: () => {
+          this.isSubmitting = false;
+        }
+      });
+    } else {
+      // Mark all fields as touched to show validation errors
+      Object.keys(this.agendamentoForm.controls).forEach(key => {
+        this.agendamentoForm.get(key)?.markAsTouched();
+      });
     }
   }
 }
