@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
-import { ServicosService, Servico } from '../../services/servicos.service';
+import { ServicosService } from '../../services/servicos.service';
+import { Servico } from '../../models/servico.model';
 
 @Component({
   selector: 'app-servicos',

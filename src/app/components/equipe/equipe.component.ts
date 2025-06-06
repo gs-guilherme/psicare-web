@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ProfissionaisService, Profissional } from '../../services/profissionais.service';
+import { ProfissionaisService } from '../../services/profissionais.service';
+import { Profissional } from '../../models/profissional.model';
 
 @Component({
   selector: 'app-equipe',
