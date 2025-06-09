@@ -26,7 +26,7 @@ export class ProfissionaisService {
       nome: "Dra. Beatriz Lima",
       especialidade: "Psicóloga infantil",
       descricao: "Especializada em desenvolvimento infantil e adolescente",
-      imagem: "https://images.pexels.com/photos/5998034/pexels-photo-5998034.jpeg"
+      imagem: "https://images.pexels.com/photos/7176319/pexels-photo-7176319.jpeg"
     },
     {
       id: 3,
@@ -40,7 +40,7 @@ export class ProfissionaisService {
       nome: "Dr. Lucas Andrade",
       especialidade: "Psicopedagogo",
       descricao: "Especialista em dificuldades de aprendizagem",
-      imagem: "https://images.pexels.com/photos/5490263/pexels-photo-5490263.jpeg"
+      imagem: "https://images.pexels.com/photos/6749778/pexels-photo-6749778.jpeg"
     }
   ];
 
