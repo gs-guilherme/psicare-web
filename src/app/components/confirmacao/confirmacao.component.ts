@@ -8,7 +8,6 @@ import { RouterLink } from '@angular/router';
   template: `
     <div class="container">
       <div class="confirmation-card">
-        <img src="https://images.pexels.com/photos/6474475/pexels-photo-6474475.jpeg" alt="PsiCare Logo" class="logo">
         <div class="check-circle">✓</div>
         <h2>Agendamento Confirmado!</h2>
         <p>Sua solicitação de agendamento foi enviada com sucesso!</p>
@@ -45,11 +44,6 @@ import { RouterLink } from '@angular/router';
       text-align: center;
       max-width: 500px;
       width: 100%;
-    }
-    .logo {
-      width: 80px;
-      height: 80px;
-      margin-bottom: 2rem;
     }
     .check-circle {
       width: 80px;
