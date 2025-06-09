@@ -57,13 +57,15 @@ import { AgendamentoService } from '../../services/agendamento.service';
               formControlName="telefone"
               placeholder="(31) 99999-9999"
               [class.error]="isFieldInvalid('telefone')"
+              (input)="onTelefoneInput($event)"
+              maxlength="15"
             >
             <div class="error-messages" *ngIf="isFieldInvalid('telefone')">
               <span *ngIf="agendamentoForm.get('telefone')?.errors?.['required']">
                 Campo obrigatório
               </span>
               <span *ngIf="agendamentoForm.get('telefone')?.errors?.['pattern']">
-                Formato de telefone inválido
+                Formato de telefone inválido. Use: (31) 99999-9999
               </span>
             </div>
           </div>
@@ -310,6 +312,30 @@ export class AgendamentoComponent implements OnInit {
   isFieldInvalid(fieldName: string): boolean {
     const field = this.agendamentoForm.get(fieldName);
     return !!(field && field.invalid && (field.dirty || field.touched));
+  }
+
+  onTelefoneInput(event: any) {
+    let value = event.target.value;
+    
+    // Remove todos os caracteres não numéricos
+    value = value.replace(/\D/g, '');
+    
+    // Aplica a máscara baseada no comprimento
+    if (value.length <= 2) {
+      value = value.replace(/(\d{0,2})/, '($1');
+    } else if (value.length <= 6) {
+      value = value.replace(/(\d{2})(\d{0,4})/, '($1) $2');
+    } else if (value.length <= 10) {
+      value = value.replace(/(\d{2})(\d{4})(\d{0,4})/, '($1) $2-$3');
+    } else {
+      value = value.replace(/(\d{2})(\d{5})(\d{0,4})/, '($1) $2-$3');
+    }
+    
+    // Atualiza o valor do campo
+    event.target.value = value;
+    
+    // Atualiza o FormControl
+    this.agendamentoForm.get('telefone')?.setValue(value);
   }
 
   onSubmit() {

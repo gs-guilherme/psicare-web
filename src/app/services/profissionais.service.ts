@@ -26,7 +26,7 @@ export class ProfissionaisService {
       nome: "Dra. Beatriz Lima",
       especialidade: "Psicóloga infantil",
       descricao: "Especializada em desenvolvimento infantil e adolescente",
-      imagem: "https://images.pexels.com/photos/7176319/pexels-photo-7176319.jpeg"
+      imagem: "https://images.pexels.com/photos/5215024/pexels-photo-5215024.jpeg"
     },
     {
       id: 3,
