@@ -7,7 +7,9 @@
     "start": "ng serve",
     "build": "ng build",
     "dev": "npx ng serve",
-    "api": "json-server --watch db.json --port 3000"
+    "api": "json-server --watch db.json --port 3000",
+    "build:prod": "ng build --configuration production --base-href /psicare-web/",
+    "deploy": "ng build --configuration production --base-href /psicare-web/ && npx angular-cli-ghpages --dir=dist/demo"
   },
   "dependencies": {
     "@angular/animations": "^19.2.0",
@@ -25,6 +27,7 @@
     "@angular/build": "^19.2.0",
     "@angular/cli": "^19.2.0",
     "@angular/compiler-cli": "^19.2.0",
+    "angular-cli-ghpages": "^2.0.0",
     "json-server": "^0.17.4",
     "typescript": "^5.8.2"
   }
