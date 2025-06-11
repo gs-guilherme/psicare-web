@@ -37,8 +37,8 @@ export class ProfissionaisService {
     },
     {
       id: 4,
-      nome: "Dr. Lucas Andrade",
-      especialidade: "Psicopedagogo",
+      nome: "Dra. Luana Lemos",
+      especialidade: "Psicopedagoga",
       descricao: "Especialista em dificuldades de aprendizagem",
       imagem: "https://images.pexels.com/photos/5407206/pexels-photo-5407206.jpeg"
     }
