@@ -37,10 +37,11 @@ import { Profissional } from '../../models/profissional.model';
     .header h2 {
       font-size: 2.5rem;
       margin-bottom: 1rem;
+      color: white;
     }
     .header p {
       font-size: 1.2rem;
-      opacity: 0.9;
+      color: white;
     }
     .cards {
       display: grid;
@@ -88,7 +89,10 @@ export class EquipeComponent implements OnInit {
 
   ngOnInit() {
     this.profissionaisService.getProfissionais().subscribe(
-      profissionais => this.profissionais = profissionais
+      profissionais => {
+        this.profissionais = profissionais;
+        console.log('Profissionais carregados:', this.profissionais.length);
+      }
     );
   }
 }

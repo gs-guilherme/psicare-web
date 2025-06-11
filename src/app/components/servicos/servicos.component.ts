@@ -48,10 +48,11 @@ import { Servico } from '../../models/servico.model';
       font-size: 2.5rem;
       margin-bottom: 1rem;
       font-weight: bold;
+      color: white;
     }
     .header p {
       font-size: 1.2rem;
-      opacity: 0.9;
+      color: white;
     }
     .cards {
       display: grid;
@@ -155,7 +156,10 @@ export class ServicosComponent implements OnInit {
 
   ngOnInit() {
     this.servicosService.getServicos().subscribe(
-      servicos => this.servicos = servicos
+      servicos => {
+        this.servicos = servicos;
+        console.log('Serviços carregados:', this.servicos.length);
+      }
     );
   }
 }

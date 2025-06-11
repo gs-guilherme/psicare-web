@@ -12,7 +12,7 @@ export class ServicosService {
   // Exemplo: private apiUrl = 'https://sua-api-remota.com/servicos';
   private apiUrl = 'http://localhost:3000/servicos';
 
-  // Dados mockados como fallback
+  // Dados mockados como fallback - Expandindo a lista de serviços
   private mockServicos: Servico[] = [
     {
       id: 1,
@@ -51,6 +51,45 @@ export class ServicosService {
         "Diagnóstico preciso",
         "Planejamento terapêutico personalizado",
         "Relatório detalhado"
+      ]
+    },
+    {
+      id: 4,
+      nome: "Terapia Familiar",
+      descricao: "Atendimento voltado para a dinâmica familiar, promovendo diálogo e resolução de conflitos entre membros da família.",
+      imagem: "https://images.pexels.com/photos/4098274/pexels-photo-4098274.jpeg",
+      preco: 180,
+      duracao: "60 minutos",
+      beneficios: [
+        "Melhoria na comunicação familiar",
+        "Resolução de conflitos geracionais",
+        "Fortalecimento dos vínculos familiares"
+      ]
+    },
+    {
+      id: 5,
+      nome: "Psicoterapia Infantil",
+      descricao: "Atendimento especializado para crianças, utilizando técnicas lúdicas e adequadas ao desenvolvimento infantil.",
+      imagem: "https://images.pexels.com/photos/8613089/pexels-photo-8613089.jpeg",
+      preco: 140,
+      duracao: "45 minutos",
+      beneficios: [
+        "Desenvolvimento emocional saudável",
+        "Melhoria no comportamento",
+        "Apoio no desenvolvimento social"
+      ]
+    },
+    {
+      id: 6,
+      nome: "Terapia de Grupo",
+      descricao: "Sessões em grupo para compartilhamento de experiências e apoio mútuo em um ambiente seguro e acolhedor.",
+      imagem: "https://images.pexels.com/photos/7176319/pexels-photo-7176319.jpeg",
+      preco: 80,
+      duracao: "90 minutos",
+      beneficios: [
+        "Apoio social e emocional",
+        "Compartilhamento de experiências",
+        "Desenvolvimento de habilidades sociais"
       ]
     }
   ];
