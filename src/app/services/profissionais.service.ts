@@ -40,7 +40,7 @@ export class ProfissionaisService {
       nome: "Dr. Lucas Andrade",
       especialidade: "Psicopedagogo",
       descricao: "Especialista em dificuldades de aprendizagem",
-      imagem: "https://images.pexels.com/photos/6749778/pexels-photo-6749778.jpeg"
+      imagem: "https://images.pexels.com/photos/5407206/pexels-photo-5407206.jpeg"
     }
   ];
 
